@@ -30,6 +30,11 @@ f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\Microsoft.AI.WindowsS
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\Microsoft.ApplicationInsights.xml
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\Newtonsoft.Json.xml
-f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\obj\Debug\FormDesigner.csprojResolveAssemblyReference.cache
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\obj\Debug\FormDesigner.dll
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\obj\Debug\FormDesigner.pdb
+f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\EntityFramework.dll
+f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\EntityFramework.SqlServer.dll
+f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\EntityFramework.xml
+f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\EntityFramework.SqlServer.xml
+f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\obj\Debug\FormDesigner.Migrations.T1611012303.resources
+f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\obj\Debug\FormDesigner.csproj.GenerateResource.Cache
