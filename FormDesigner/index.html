@@ -80,7 +80,7 @@
 
 
     <div class="container">
-        <form method="post" id="saveform" name="saveform" action="/index.php?s=/index/parse.html">
+        <form method="post" id="saveform" name="saveform" action="./temp_preview.html">
             <input type="hidden" name="fields" id="fields" value="0">
             <div class="row">
 
@@ -460,7 +460,7 @@
                                 win_parse = window.open('', '', 'width=800,height=600');
                                 //这里临时查看，所以替换一下，实际情况下不需要替换
                                 data = data.replace(/<\/+textarea/, '&lt;textarea');
-                                win_parse.document.write('<textarea style="width:100%;height:100%">' + data + '</textarea>');
+                                win_parse.document.write(data);
                                 win_parse.focus();
                             }
 

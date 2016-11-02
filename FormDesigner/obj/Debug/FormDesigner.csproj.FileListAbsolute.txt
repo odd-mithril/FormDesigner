@@ -1,3 +1,4 @@
+f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\Microsoft.AI.Agent.Intercept.dll
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\ApplicationInsights.config
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\roslyn\csc.exe
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
@@ -14,7 +15,8 @@ f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\roslyn\VBCSCompiler.e
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\FormDesigner.dll.config
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\FormDesigner.dll
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\FormDesigner.pdb
-f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\Microsoft.AI.Agent.Intercept.dll
+f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\EntityFramework.dll
+f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\EntityFramework.SqlServer.dll
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\Microsoft.AI.DependencyCollector.dll
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\Microsoft.AI.PerfCounterCollector.dll
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\Microsoft.AI.ServerTelemetryChannel.dll
@@ -23,6 +25,8 @@ f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\Microsoft.AI.WindowsS
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\Microsoft.ApplicationInsights.dll
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\Newtonsoft.Json.dll
+f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\EntityFramework.xml
+f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\EntityFramework.SqlServer.xml
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\Microsoft.AI.DependencyCollector.xml
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\Microsoft.AI.ServerTelemetryChannel.xml
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\Microsoft.AI.Web.xml
@@ -32,9 +36,6 @@ f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\Microsoft.CodeDom.Pro
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\Newtonsoft.Json.xml
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\obj\Debug\FormDesigner.dll
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\obj\Debug\FormDesigner.pdb
-f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\EntityFramework.dll
-f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\EntityFramework.SqlServer.dll
-f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\EntityFramework.xml
-f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\bin\EntityFramework.SqlServer.xml
-f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\obj\Debug\FormDesigner.Migrations.T1611012303.resources
+f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\obj\Debug\FormDesigner.Migrations.T1611021059.resources
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\obj\Debug\FormDesigner.csproj.GenerateResource.Cache
+f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\obj\Debug\FormDesigner.csprojResolveAssemblyReference.cache
