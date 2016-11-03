@@ -129,7 +129,6 @@
     <Content Include="js\ueditor\third-party\video-js\font\vjs.ttf" />
     <Content Include="js\ueditor\third-party\video-js\font\vjs.woff" />
     <Content Include="FormService.ashx" />
-    <Content Include="Document\检查项.xlsx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -465,14 +464,10 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAL\FormDesignerContext.cs" />
+    <Compile Include="FormDesignerContext.cs" />
     <Compile Include="Migrations\201611020259339_T1611021059.cs" />
     <Compile Include="Migrations\201611020259339_T1611021059.Designer.cs">
       <DependentUpon>201611020259339_T1611021059.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611022358277_T1611030758.cs" />
-    <Compile Include="Migrations\201611022358277_T1611030758.Designer.cs">
-      <DependentUpon>201611022358277_T1611030758.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\FormInfo.cs" />
@@ -480,16 +475,12 @@
       <DependentUpon>FormService.ashx</DependentUpon>
     </Compile>
     <Compile Include="Model\FormInfoEntity.cs" />
-    <Compile Include="Model\TempFormInfoEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201611020259339_T1611021059.resx">
       <DependentUpon>201611020259339_T1611021059.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611022358277_T1611030758.resx">
-      <DependentUpon>201611022358277_T1611030758.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
