@@ -147,6 +147,7 @@
     <Content Include="css\bootstrap\js\bootstrap.js" />
     <Content Include="css\bootstrap\js\bootstrap.min.js" />
     <Content Include="css\site.css" />
+    <Content Include="temp.html" />
     <Content Include="temp_preview.html" />
     <Content Include="favicon.ico" />
     <Content Include="index.html" />
@@ -469,18 +470,26 @@
     <Compile Include="Migrations\201611020259339_T1611021059.Designer.cs">
       <DependentUpon>201611020259339_T1611021059.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611031256240_T1611032056.cs" />
+    <Compile Include="Migrations\201611031256240_T1611032056.Designer.cs">
+      <DependentUpon>201611031256240_T1611032056.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\FormInfo.cs" />
     <Compile Include="FormService.ashx.cs">
       <DependentUpon>FormService.ashx</DependentUpon>
     </Compile>
     <Compile Include="Model\FormInfoEntity.cs" />
+    <Compile Include="Model\TempFormInfoEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201611020259339_T1611021059.resx">
       <DependentUpon>201611020259339_T1611021059.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611031256240_T1611032056.resx">
+      <DependentUpon>201611031256240_T1611032056.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

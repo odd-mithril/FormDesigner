@@ -11,35 +11,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="author" content="leipi.org">
-    <link href="/Public/css/bootstrap/css/bootstrap.css?2028" rel="stylesheet" type="text/css" />
+    <link href="css/bootstrap/css/bootstrap.css?2028" rel="stylesheet" type="text/css" />
     <!--[if lte IE 6]>
     <link rel="stylesheet" type="text/css" href="/Public/css/bootstrap/css/bootstrap-ie6.css?2028">
     <![endif]-->
     <!--[if lte IE 7]>
     <link rel="stylesheet" type="text/css" href="/Public/css/bootstrap/css/ie.css?2028">
     <![endif]-->
-    <link href="/Public/css/site.css?2028" rel="stylesheet" type="text/css" />
+    <link href="css/site.css?2028" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
         var _root = 'http://formdesign.leipi.org/', _controller = 'demo';
     </script>
 
-    <script type="text/javascript" charset="utf-8" src="/Public/js/jquery-1.7.2.min.js?2028"></script>
-    <script type="text/javascript" charset="utf-8" src="/Public/js/ueditor/ueditor.config.js?2028"></script>
-    <script type="text/javascript" charset="utf-8" src="/Public/js/ueditor/ueditor.all.js?2028"> </script>
-    <script type="text/javascript" charset="utf-8" src="/Public/js/ueditor/lang/zh-cn/zh-cn.js?2028"></script>
-
-
+    <script type="text/javascript" charset="utf-8" src="js/jquery-1.7.2.min.js?2028"></script>
+    <script type="text/javascript" charset="utf-8" src="js/ueditor/ueditor.config.js?2028"></script>
+    <script type="text/javascript" charset="utf-8" src="js/ueditor/ueditor.all.js?2028"> </script>
+    <script type="text/javascript" charset="utf-8" src="js/ueditor/lang/zh-cn/zh-cn.js?2028"></script>
+    <script type="text/javascript">
+        function tbAddRow(dname) {
+            var sTbid = dname + "_table";
+            $("#" + sTbid + " .template")
+                //连同事件一起复制
+                .clone(true)
+                //去除模板标记
+                .removeClass("template")
+                //修改内部元素
+                .find(".delrow").show().end()
+                .find("input").val("").end()
+                .find("textarea").val("").end()
+                //插入表格
+               .appendTo($("#" + sTbid));
+        }
+        //统计
+        function sum_total(dname, e) {
+            var tsum = 0;
+            $('input[name="' + dname + '[]"]').each(function () {
+                var t = parseFloat($(this).val());
+                if (!t) t = 0;
+                if (t) tsum += t;
+                $(this).val(t);
+            });
+            $('input[name="' + dname + '[total]"]').val(tsum);
+        }
+        /*删除tr*/
+        function fnDeleteRow(dname, obj) {
+            var sTbid = dname + "_table";
+            var oTable = document.getElementById(sTbid);
+            while (obj.tagName != "TR") {
+                obj = obj.parentNode;
+            }
+            oTable.deleteRow(obj.rowIndex);
+        }
+    </script>
 </head>
 <body>
-
-
-
-
     <div class="container">
         <div class="page-header">
             <h1>预览表单 <small>如无问题请保存你的设计</small></h1>
         </div>
-
+        <div id="previewcontent"></div>
     </div><!--end container-->
 
 

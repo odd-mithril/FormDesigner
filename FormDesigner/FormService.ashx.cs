@@ -17,6 +17,51 @@ namespace FormDesigner
 
         public void ProcessRequest(HttpContext context)
         {
+            //操作行为
+            string atype = context.Request["atype"];
+            try
+            {
+                switch (atype)
+                {
+                    case "saveform":
+                        context.Response.ContentType = "text/plain";
+                        context.Response.Write(SaveForm(context));
+                        break;
+                    case "previewform":
+                        context.Response.ContentType = "text/plain";
+                        context.Response.Write(PreviewForm(context));
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+
+        private string PreviewForm(HttpContext context)
+        {
+            string result = string.Empty;
+
+            FormInfo form = new FormInfo();
+
+            form.ContentParse = context.Request.Form["parse_form"];
+            form.Id = string.IsNullOrEmpty(context.Request.Form["formid"]) ? 0 : Int32.Parse(context.Request.Form["formid"]);
+            form.Action = context.Request.Form["type"];
+            form = JsonConvert.DeserializeObject<FormInfo>(form.ContentParse);
+
+
+            result = GetHtml(form);
+
+            return result;
+        }
+
+        private string SaveForm(HttpContext context)
+        {
+            string result = string.Empty;
+
             FormInfo form = new FormInfo();
             try
             {
@@ -38,10 +83,13 @@ namespace FormDesigner
                 Console.WriteLine(ex.ToString());
             }
 
-            context.Response.ContentType = "text/plain";
-            string formInfoHTML = GetHtml(form);
-            context.Response.Write(formInfoHTML);
+            result = GetHtml(form);
+
+            return result;
         }
+
+        #region 表单内容解析
+
 
         public static string GetHtml(FormInfo form, NameValueCollection tableData = null)
         {
@@ -373,7 +421,7 @@ namespace FormDesigner
         private static string GetListctrl(JObject item, NameValueCollection formData, string action = "view")
         {
             action = "";
-            string valuetest = "{\"data_110\":[\"1\",\"2\"],\"data_111\":[\"21\",\"22\",\"22\"]}";
+            string valuetest = "{\"data_110\":[\"1\",\"2\"]}"; //"{\"data_110\":[\"1\",\"2\"],\"data_111\":[\"21\",\"22\",\"22\"]}";
 
             string name = item["name"].ToString();
             string value = formData[name];
@@ -394,7 +442,7 @@ namespace FormDesigner
 
 
             string temp = "<table id=\"" + name + "_table\" bindTable=\"true\" cellspacing=\"0\" class=\"table table-bordered table-condensed\" style=\"" + style + "\"><thead>{0}</thead><tbody>{1}</tbody>{2}</table>";
-            string btnAdd = "<span class=\"pull-right\"><button class=\"btn btn-small btn-success listAdd\" type=\"button\" tbname=\"" + name + "\">添加一行</button></span>"; //添加按钮
+            string btnAdd = "<span class=\"pull-right\"><button class=\"btn btn-small btn-success listAdd\" type=\"button\" tbname=\"" + name + "\"  onclick=\"tbAddRow('" + name + "')\">添加一行</button></span>"; //添加按钮
             string theader = "<tr><th colspan=\"{0}\">{1}{2}</th></tr>{3}";//头部模版
 
             string trTitle = "";//标题
@@ -424,7 +472,7 @@ namespace FormDesigner
                 for (int i = 0; i < tdCount; i++)
                 {
                     string tdname = name + "[" + i + "]";
-                    string sum = listSum[i] == "1" ? "sum=\"" + tdname + "\"" : "";//是否参与统计
+                    string sum = listSum[i] == "1" ? "sum=\"" + tdname + "\"" : "";//是否参与统计 // onblur="sum_total('data_9[0][]')"
                     string tdValue = rowValue != null && rowValue.Count > i ? rowValue[i].ToString() : listValue[i];
                     string type = listType[i];//类型
 
@@ -457,7 +505,7 @@ namespace FormDesigner
                         if (action == "view") continue;
                         //tr += "<td></td>";
                         else
-                            tr += "<td><a href=\"javascript:void(0);\" class=\"delrow \">删除</a></td>";
+                            tr += "<td><a href=\"javascript:void(0);\" class=\"delrow \" onclick=\"fnDeleteRow('" + name + "',this)\">删除</a></td>";
                         //tr += string.Format("<td><a href=\"javascript:void(0);\" class=\"delrow {0}\">删除</a></td>", dataValue != null ? "" : "hide");
                     }
                     else
@@ -469,13 +517,13 @@ namespace FormDesigner
                         else
                         {
                             if (type == "text")
-                                tr += string.Format("<td><input class=\"input-medium\" type=\"text\" value=\"{0}\" name=\"{1}[]\" {2}></td>", tdValue, tdname, sum);
+                                tr += string.Format("<td><input class=\"input-medium\" type=\"text\" value=\"{0}\" name=\"{1}[]\" {2} onblur=\"sum_total('{1}')\"></td>", tdValue, tdname, sum);
                             else if (type == "int")
-                                tr += string.Format("<td><input class=\"input-medium\" type=\"text\" value=\"{0}\" name=\"{1}[]\" {2}></td>", tdValue, tdname, sum);
+                                tr += string.Format("<td><input class=\"input-medium\" type=\"text\" value=\"{0}\" name=\"{1}[]\" {2} onblur=\"sum_total('{1}')\"></td>", tdValue, tdname, sum);
                             else if (type == "textarea")
                                 tr += string.Format("<td><textarea class=\"input-medium\" name=\"{0}\" >{1}</textarea></td>", tdname, tdValue, sum);
                             else if (type == "calc")
-                                tr += string.Format("<td><input class=\"input-medium\" type=\"text\" value=\"{0}\" name=\"{1}[]\" {2}></td>", tdValue, tdname, sum);
+                                tr += string.Format("<td><input class=\"input-medium\" type=\"text\" value=\"{0}\" name=\"{1}[]\"  >{2}</td>", tdValue, tdname, sum);
                         }
                     }
 
@@ -487,7 +535,7 @@ namespace FormDesigner
                             if (action == "view")
                                 tdSum += string.Format("<td>合计：value{0}{1}</td>", i, listUnit[i]);
                             else
-                                tdSum += string.Format("<td>合计：<input class=\"input-small\" type=\"text\" value=\"value{0}\" name=\"{1}[total]\" {2}\">{3}</td>", i, tdname, sum, listUnit[i]);
+                                tdSum += string.Format("<td>合计：<input class=\"input-small\" type=\"text\" value=\"value{0}\" name=\"{1}[total]\" {2}>{3}</td>", i, tdname, sum, listUnit[i]);
                         }
                         else
                         {
@@ -519,6 +567,7 @@ namespace FormDesigner
         }
 
 
+        #endregion
 
         public bool IsReusable
         {

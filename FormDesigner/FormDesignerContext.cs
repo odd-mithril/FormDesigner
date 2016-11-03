@@ -22,6 +22,7 @@ namespace FormDesigner
 
         // public virtual DbSet<MyEntity> MyEntities { get; set; }
         public virtual DbSet<FormInfoEntity> FormInfoEntity { get; set; }
+        public virtual DbSet<TempFormInfoEntity> TempFormInfoEntity { get; set; }
     }
 
     //public class MyEntity
