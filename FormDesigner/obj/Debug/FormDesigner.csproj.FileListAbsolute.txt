@@ -39,3 +39,4 @@ f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\obj\Debug\FormDesigner.pd
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\obj\Debug\FormDesigner.Migrations.T1611021059.resources
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\obj\Debug\FormDesigner.csproj.GenerateResource.Cache
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\obj\Debug\FormDesigner.csprojResolveAssemblyReference.cache
+f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\obj\Debug\FormDesigner.Migrations.T1611030758.resources

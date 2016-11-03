@@ -86,7 +86,7 @@
 
                 <div class="well well-small">
                     <span class="pull-right">
-                        <a href="javascript:void(0);" class="btn btn-primary btn-small" onclick="leipiFormDesign.fnReview();">预览效果</a>
+                        <a href="javascript:void(0);" class="btn btn-primary btn-small" id="button_preview" onclick="leipiFormDesign.fnReview();">预览效果</a>
                         <a href="javascript:void(0);" class="btn btn-success btn-small" id="button_save" onclick="leipiFormDesign.fnCheckForm('save');">确定保存</a>
                     </span>
 
@@ -452,7 +452,7 @@
                     //异步提交数据
                     $.ajax({
                         type: 'POST',
-                        url: './FormService.ashx?type=saveform',
+                        url: './FormService.ashx?atype=saveform',
                         //dataType : 'json',
                         data: { 'type': type_value, 'formid': formid, 'parse_form': parse_form },
                         success: function (data) {
@@ -488,10 +488,51 @@
                 if (leipiEditor.hasContents()) {
                     leipiEditor.sync();       //同步内容
 
-                    document.saveform.target = "mywin";
-                    window.open('', 'mywin', "menubar=0,toolbar=0,status=0,resizable=1,left=0,top=0,scrollbars=1,width=" + (screen.availWidth - 10) + ",height=" + (screen.availHeight - 50) + "\"");
-                    document.saveform.action = "./temp_preview.html";
-                    document.saveform.submit(); //提交表单
+                    //--------------以下仅参考-----------------------------------------------------------------------------------------------------
+                    var type_value = '', formid = 0, fields = $("#fields").val(), formeditor = '';
+
+                    if (typeof type !== 'undefined') {
+                        type_value = type;
+                    }
+                    //获取表单设计器里的内容
+                    formeditor = leipiEditor.getContent();
+                    //解析表单设计器控件
+                    var parse_form = this.parse_form(formeditor, fields);
+                    //alert(parse_form);
+
+                    //异步提交数据
+                    $.ajax({
+                        type: 'POST',
+                        url: './FormService.ashx?atype=previewform',
+                        //dataType : 'json',
+                        data: { 'type': type_value, 'formid': formid, 'parse_form': parse_form },
+                        success: function (data) {
+                            if (confirm('查看js解析后，提交到服务器的数据，请临时允许弹窗')) {
+                                win_parse = window.open('./temp_preview.html', '', 'width=800,height=600');
+                                //这里临时查看，所以替换一下，实际情况下不需要替换
+                                data = data.replace(/<\/+textarea/, '&lt;textarea');
+                                //win_parse.document.write(data);
+                                //win_parse.focus();
+
+                                $(win_parse).load(function () {
+                                    win_parse.$("#previewcontent").html(data);
+                                });
+                                $(win_parse.document).load(function () {
+                                    //$(win_parse.document).contents().find('#previewcontent').html(data);
+                                    win_parse.document.getElementById('previewcontent').innerHTML = data;
+                                    win_parse.focus();
+                                });
+                            }
+
+                            /*
+                          if(data.success==1){
+                              alert('保存成功');
+                              $('#submitbtn').button('reset');
+                          }else{
+                              alert('保存失败！');
+                          }*/
+                        }
+                    });
                 } else {
                     alert('表单内容不能为空！');
                     return false;

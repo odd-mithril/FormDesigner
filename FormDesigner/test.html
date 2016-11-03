@@ -1,40 +1,207 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE HTML>
 <html>
 <head>
-    <title></title>
-    <meta charset="utf-8" />
+
+    <title>临时预览 Ueditor FormDesign Plugins -leipi.org</title>
+    <meta name="keyword" content="ueditor formdesign plugins,ueditor扩展,web表单设计器,高级表单设计器,Leipi Form Design,web form设计器,web form designer">
+    <meta name="description" content="javascript jquery ueditor php表单设计器实例演示与下载！">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="author" content="leipi.org">
+    <link href="/Public/css/bootstrap/css/bootstrap.css?2028" rel="stylesheet" type="text/css" />
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" type="text/css" href="/Public/css/bootstrap/css/bootstrap-ie6.css?2028">
+    <![endif]-->
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="/Public/css/bootstrap/css/ie.css?2028">
+    <![endif]-->
+    <link href="/Public/css/site.css?2028" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        var _root = 'http://formdesign.leipi.org/', _controller = 'demo';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="/Public/js/jquery-1.7.2.min.js?2028"></script>
+    <script type="text/javascript" charset="utf-8" src="/Public/js/ueditor/ueditor.config.js?2028"></script>
+    <script type="text/javascript" charset="utf-8" src="/Public/js/ueditor/ueditor.all.js?2028"> </script>
+    <script type="text/javascript" charset="utf-8" src="/Public/js/ueditor/lang/zh-cn/zh-cn.js?2028"></script>
+
+
 </head>
 <body>
-    <p style="text-align: center;">
-        <br />
-    </p>
-    <p style="text-align: center;">
-        <span style="font-size: 24px;">示例表</span>
-    </p>
-    <table class="table table-bordered">
-        <tbody>
-            <tr class="firstRow">
-                <td valign="top" style="word-break: break-all; border-color: rgb(221, 221, 221);">文本框</td>
-                <td valign="top" style="word-break: break-all; border-color: rgb(221, 221, 221);" width="227">{data_1}</td>
-                <td valign="top" style="word-break: break-all; border-color: rgb(221, 221, 221);" width="85">下拉菜单</td>
-                <td valign="top" style="border-color: rgb(221, 221, 221);" width="312">{data_2}</td>
-            </tr>
-            <tr>
-                <td valign="top" style="word-break: break-all; border-color: rgb(221, 221, 221);">单选</td>
-                <td valign="top" style="word-break: break-all; border-color: rgb(221, 221, 221);" width="41">{data_3}</td>
-                <td valign="top" style="word-break: break-all; border-color: rgb(221, 221, 221);" width="85">复选</td>
-                <td valign="top" style="word-break: break-all; border-color: rgb(221, 221, 221);" width="312">{checkboxs_0}</td>
-            </tr>
-            <tr>
-                <td valign="top" style="word-break: break-all; border-color: rgb(221, 221, 221);">宏控件</td>
-                <td valign="top" style="border-color: rgb(221, 221, 221);" width="41">{data_7}</td>
-                <td valign="top" style="word-break: break-all; border-color: rgb(221, 221, 221);" width="85">二维码</td>
-                <td valign="top" style="border-color: rgb(221, 221, 221);" width="312">{data_8}</td>
-            </tr>
-        </tbody>
-    </table>
-    <p>{data_9}</p>
-    <p>{data_10}</p>
-    <p>{data_11}</p>
+
+
+
+
+    <div class="container">
+        <div class="page-header">
+            <h1>预览表单 <small>如无问题请保存你的设计</small></h1>
+        </div>
+        <table class="table table-bordered"><tbody><tr class="firstRow"><td style="WORD-BREAK: break-all" width="215" valign="top">姓名：</td><td width="215" valign="top"><input type="text" value="" name="data_5" style="TEXT-ALIGN: left; WIDTH: 150px" /></td><td style="WORD-BREAK: break-all" width="215" valign="top">性别：</td><td style="WORD-BREAK: break-all" width="215" valign="top"><input type="radio" name="data_6" value="男" checked="checked">男&nbsp;<input type="radio" name="data_6" value="女">女&nbsp;</td></tr><tr><td style="WORD-BREAK: break-all" width="215" valign="top">家庭地址：</td><td style="WORD-BREAK: break-all" width="215" valign="top"><input type="text" value="" name="data_7" style="TEXT-ALIGN: left; WIDTH: 150px" /></td><td style="WORD-BREAK: break-all" width="215" valign="top">电话：</td><td width="215" valign="top"><input type="text" value="" name="data_8" style="TEXT-ALIGN: left; WIDTH: 150px" /></td></tr><tr><td style="WORD-BREAK: break-all" valign="top">新加入：</td><td valign="top"><input type="text" value="" name="data_10" style="TEXT-ALIGN: left; WIDTH: 150px" /></td><td valign="top"><br /></td><td valign="top"><br /></td></tr></tbody></table><p>
+            <script>
+                function tbAddRow(dname) {
+                    var sTbid = dname + "_table";
+                    $("#" + sTbid + " .template")
+                        //连同事件一起复制
+                        .clone(true)
+                        //去除模板标记
+                        .removeClass("template")
+                        //修改内部元素
+                        .find(".delrow").show().end()
+                        .find("input").val("").end()
+                        .find("textarea").val("").end()
+                        //插入表格
+                       .appendTo($("#" + sTbid));
+                }
+                //统计
+                function sum_total(dname, e) {
+
+                    var tsum = 0;
+                    $('input[name="' + dname + '[]"]').each(function () {
+                        var t = parseFloat($(this).val());
+                        if (!t) t = 0;
+                        if (t) tsum += t;
+                        $(this).val(t);
+                    });
+                    $('input[name="' + dname + '[total]"]').val(tsum);
+
+                }
+
+                /*删除tr*/
+                function fnDeleteRow(obj) {
+                    var sTbid = "data_9_table";
+                    var oTable = document.getElementById(sTbid);
+                    while (obj.tagName != "TR") {
+                        obj = obj.parentNode;
+                    }
+                    oTable.deleteRow(obj.rowIndex);
+                }
+            </script><table id="data_9_table" cellspacing="0" class="table table-bordered table-condensed" style="WIDTH: 100%">
+                <thead>
+                    <tr>
+                        <th colspan="4">
+                            列表控件
+                            <span class="pull-right">
+                                <button class="btn btn-small btn-success" type="button" onclick="tbAddRow('data_9')">添加一行</button>
+                            </span>
+                        </th>
+                    </tr>
+                    <tr>
+                    <tr><th>第一列</th><th>第二列</th><th>第三列</th><th>操作</th></tr>
+                </thead>
+                <tr class="template">
+                    <td><input class="input-medium" onblur="sum_total('data_9[0]')" type="text" name="data_9[0][]" value="0"> </td>
+                    <td><input class="input-medium" onblur="sum_total('data_9[1]')" type="text" name="data_9[1][]" value="0"> </td>
+                    <td><input class="input-medium" onblur="sum_total('data_9[2]')" type="text" name="data_9[2][]" value="0"> </td>
+                    <td><a href="javascript:void(0);" onclick="fnDeleteRow(this)" class="delrow hide">删除</a></td>
+                </tr>
+                </tbody>
+                <tfooter>
+                    <tr>
+                        <td>合计：<input type="text" class="input-small" name="data_9[0][total]" onblur="sum_total('data_9[0][]')" value="0"> </td>
+                        <td>合计：<input type="text" class="input-small" name="data_9[1][total]" onblur="sum_total('data_9[1][]')" value="0"> </td>
+                        <td>合计：<input type="text" class="input-small" name="data_9[2][total]" onblur="sum_total('data_9[2][]')" value="0"> </td>
+                        <td></td>
+                    </tr>
+                </tfooter>
+            </table>
+        </p><p>
+            <script>
+                function tbAddRow(dname) {
+                    var sTbid = dname + "_table";
+                    $("#" + sTbid + " .template")
+                        //连同事件一起复制
+                        .clone(true)
+                        //去除模板标记
+                        .removeClass("template")
+                        //修改内部元素
+                        .find(".delrow").show().end()
+                        .find("input").val("").end()
+                        .find("textarea").val("").end()
+                        //插入表格
+                       .appendTo($("#" + sTbid));
+                }
+                //统计
+                function sum_total(dname, e) {
+
+                    var tsum = 0;
+                    $('input[name="' + dname + '[]"]').each(function () {
+                        var t = parseFloat($(this).val());
+                        if (!t) t = 0;
+                        if (t) tsum += t;
+                        $(this).val(t);
+                    });
+                    $('input[name="' + dname + '[total]"]').val(tsum);
+
+                }
+
+                /*删除tr*/
+                function fnDeleteRow(obj) {
+                    var sTbid = "data_1_table";
+                    var oTable = document.getElementById(sTbid);
+                    while (obj.tagName != "TR") {
+                        obj = obj.parentNode;
+                    }
+                    oTable.deleteRow(obj.rowIndex);
+                }
+            </script><table id="data_1_table" cellspacing="0" class="table table-bordered table-condensed" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th colspan="4">
+                            列表控件1
+                            <span class="pull-right">
+                                <button class="btn btn-small btn-success" type="button" onclick="tbAddRow('data_1')">添加一行</button>
+                            </span>
+                        </th>
+                    </tr>
+                    <tr>
+                    <tr><th>1</th><th>2</th><th>3</th><th>操作</th></tr>
+                </thead>
+                <tr class="template">
+                    <td><input class="input-medium" type="text" name="data_1[0][]" value=""> </td>
+                    <td><input class="input-medium" type="text" name="data_1[1][]" value=""> </td>
+                    <td><input class="input-medium" type="text" name="data_1[2][]" value=""> </td>
+                    <td><a href="javascript:void(0);" onclick="fnDeleteRow(this)" class="delrow hide">删除</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </p>
+    </div><!--end container-->
+
+
+    <block name="footer_js">
+
+
+
+
+        <div class="bs-footer" role="contentinfo">
+            <div class="container">
+                <p><span class="glyphicon glyphicon-list-alt"></span> 反馈：payonesmile@qq.com</p>
+                <p><span class="glyphicon glyphicon-usd"></span> 支持：捐赠支付宝 payonesmile@qq.com 、<a href="#">捐赠记录</a></p>
+                <p><span class="glyphicon glyphicon-bookmark"></span> 鸣谢：<a href="http://ueditor.baidu.com" target="_balnk">UEditor</a>、<a href="http://www.bootcss.com" target="_balnk">Bootstrap中文网</a>、<a href="http://www.leipi.org" target="_balnk">雷劈网</a></p>
+                <p><a href="http://www.leipi.org" title="雷劈网"><img src="http://www.leipi.org/wp-content/themes/leipi/images/leipi.png" alt="雷劈认证 icon" height="30"></a> &copy;2014 Ueditor Formdesign Plugins v4 leipi.org</p>
+            </div>
+        </div>
+        <!--footer js -->
+        <div style="display: none;">
+            88888888888  88                             ad88  88                ad88888ba   8888888888
+            88           ""                            d8"    88               d8"     "88  88
+            88                                         88     88               8P       88  88  ____
+            88aaaaa      88  8b,dPPYba,   ,adPPYba,  MM88MMM  88  8b       d8  Y8,    ,d88  88a8PPPP8b,
+            88"""""      88  88P'   "Y8  a8P_____88    88     88  `8b     d8'   "PPPPPP"88  PP"     `8b
+            88           88  88          8PP"""""""    88     88   `8b   d8'            8P           d8
+            88           88  88          "8b,   ,aa    88     88    `8b,d8'    8b,    a8P   Y8a     a8P
+            88           88  88           `"Ybbd8"'    88     88      Y88'     `"Y8888P'     "Y88888P"
+            d8'
+            2014-3-15 Firefly95、Ard、xinG、Xiaoyaodaya               d8'
+        </div>
+
+        <script type="text/javascript">
+            var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+            document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1e6fd3a46a5046661159c6bf55aad1cf' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+
 </body>
 </html>
