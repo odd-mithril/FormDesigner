@@ -40,3 +40,6 @@ f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\obj\Debug\FormDesigner.Mi
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\obj\Debug\FormDesigner.csproj.GenerateResource.Cache
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\obj\Debug\FormDesigner.csprojResolveAssemblyReference.cache
 f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\obj\Debug\FormDesigner.Migrations.T1611032056.resources
+f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\obj\Debug\FormDesigner.Migrations.T1611061109.resources
+f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\obj\Debug\FormDesigner.Migrations.T1611061119.resources
+f:\Personal\Documents\GitHub\FormDesigner\FormDesigner\obj\Debug\FormDesigner.Migrations.T1611062209.resources

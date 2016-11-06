@@ -23,6 +23,10 @@ namespace FormDesigner
             {
                 switch (atype)
                 {
+                    case "getforminfo":
+                        context.Response.ContentType = "text/plain";
+                        context.Response.Write(GetFormInfo(context));
+                        break;
                     case "saveform":
                         context.Response.ContentType = "text/plain";
                         context.Response.Write(SaveForm(context));
@@ -30,6 +34,10 @@ namespace FormDesigner
                     case "previewform":
                         context.Response.ContentType = "text/plain";
                         context.Response.Write(PreviewForm(context));
+                        break;
+                    case "getforminfolist":
+                        context.Response.ContentType = "text/plain";
+                        context.Response.Write(GetFormInfoList(context));
                         break;
                     default:
                         break;
@@ -73,7 +81,10 @@ namespace FormDesigner
                     form = JsonConvert.DeserializeObject<FormInfo>(form.ContentParse);
 
                     FormInfoEntity formInfoEntity = new FormInfoEntity();
+                    formInfoEntity.Created = DateTime.Now;
+                    formInfoEntity.Modified = DateTime.Now;
                     formInfoEntity.ContentParse = form.ContentParse;
+                    formInfoEntity.Content = context.Request.Form["formcontent"];
                     dbcontext.FormInfoEntity.Add(formInfoEntity);
                     dbcontext.SaveChanges();
                 }
@@ -84,6 +95,64 @@ namespace FormDesigner
             }
 
             result = GetHtml(form);
+
+            return result;
+        }
+
+        private string GetFormInfoList(HttpContext context)
+        {
+            string result = string.Empty;
+            try
+            {
+                using (FormDesignerContext dbcontext = new FormDesignerContext())
+                {
+                    result = JsonConvert.SerializeObject(dbcontext.FormInfoEntity.ToList());
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+            return result;
+        }
+        private string GetFormInstanceList(HttpContext context)
+        {
+            string result = string.Empty;
+            try
+            {
+                using (FormDesignerContext dbcontext = new FormDesignerContext())
+                {
+                    result = JsonConvert.SerializeObject(dbcontext.FormInstanceEntity.ToList());
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+            return result;
+        }
+
+        private string GetFormInfo(HttpContext context)
+        {
+            string result = string.Empty;
+            string rid = context.Request["rid"];
+            try
+            {
+                using (FormDesignerContext dbcontext = new FormDesignerContext())
+                {
+                    FormInfoEntity forminfoentity = dbcontext.FormInfoEntity.Where(x => x.Id.ToString().Equals(rid)).FirstOrDefault();
+                    if (forminfoentity != null)
+                    {
+                        result = forminfoentity.Content;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
 
             return result;
         }

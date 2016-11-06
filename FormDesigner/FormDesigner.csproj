@@ -112,6 +112,19 @@
     <Content Include="App_Data\FormDesignerDB_log.ldf">
       <DependentUpon>FormDesignerDB.mdf</DependentUpon>
     </Content>
+    <Content Include="css\bootstrap\css\bootstrap-theme.css" />
+    <Content Include="css\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="css\bootstrap\css\bootstrap.min.css" />
+    <Content Include="css\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="css\jquery.bootgrid.css" />
+    <Content Include="css\jquery.bootgrid.min.css" />
+    <Content Include="design_back.html" />
+    <Content Include="forminstancelist.html" />
+    <Content Include="js\bootstrap.js" />
+    <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\jquery.bootgrid.js" />
+    <Content Include="js\jquery.bootgrid.min.js" />
+    <Content Include="forminfolist.html" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -129,6 +142,11 @@
     <Content Include="js\ueditor\third-party\video-js\font\vjs.ttf" />
     <Content Include="js\ueditor\third-party\video-js\font\vjs.woff" />
     <Content Include="FormService.ashx" />
+    <Content Include="css\bootstrap\css\bootstrap-theme.css.map" />
+    <Content Include="css\bootstrap\css\bootstrap.css.map" />
+    <Content Include="css\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="css\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="css\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -137,10 +155,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="css\bootstrap\css\bootstrap-ie6.css" />
-    <Content Include="css\bootstrap\css\bootstrap-ie6.min.css" />
     <Content Include="css\bootstrap\css\bootstrap.css" />
-    <Content Include="css\bootstrap\css\ie.css" />
     <Content Include="css\bootstrap\img\glyphicons-halflings-8.png" />
     <Content Include="css\bootstrap\img\glyphicons-halflings-white.png" />
     <Content Include="css\bootstrap\img\glyphicons-halflings.png" />
@@ -150,7 +165,7 @@
     <Content Include="temp.html" />
     <Content Include="temp_preview.html" />
     <Content Include="favicon.ico" />
-    <Content Include="index.html" />
+    <Content Include="design.html" />
     <Content Include="js\bootstrap-ie.js" />
     <Content Include="js\html5shiv.min.js" />
     <Content Include="js\jquery-1.7.2.min.js" />
@@ -466,6 +481,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FormDesignerContext.cs" />
+    <Compile Include="Helper.cs" />
     <Compile Include="Migrations\201611020259339_T1611021059.cs" />
     <Compile Include="Migrations\201611020259339_T1611021059.Designer.cs">
       <DependentUpon>201611020259339_T1611021059.cs</DependentUpon>
@@ -474,11 +490,24 @@
     <Compile Include="Migrations\201611031256240_T1611032056.Designer.cs">
       <DependentUpon>201611031256240_T1611032056.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611060309294_T1611061109.cs" />
+    <Compile Include="Migrations\201611060309294_T1611061109.Designer.cs">
+      <DependentUpon>201611060309294_T1611061109.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611060331080_T1611061119.cs" />
+    <Compile Include="Migrations\201611060331080_T1611061119.Designer.cs">
+      <DependentUpon>201611060331080_T1611061119.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611061409152_T1611062209.cs" />
+    <Compile Include="Migrations\201611061409152_T1611062209.Designer.cs">
+      <DependentUpon>201611061409152_T1611062209.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\FormInfo.cs" />
     <Compile Include="FormService.ashx.cs">
       <DependentUpon>FormService.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Model\FormInstanceEntity.cs" />
     <Compile Include="Model\FormInfoEntity.cs" />
     <Compile Include="Model\TempFormInfoEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -490,6 +519,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611031256240_T1611032056.resx">
       <DependentUpon>201611031256240_T1611032056.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611060309294_T1611061109.resx">
+      <DependentUpon>201611060309294_T1611061109.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611060331080_T1611061119.resx">
+      <DependentUpon>201611060331080_T1611061119.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611061409152_T1611062209.resx">
+      <DependentUpon>201611061409152_T1611062209.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

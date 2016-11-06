@@ -8,9 +8,8 @@ using System.Web;
 
 namespace FormDesigner
 {
-    [Table("FormInfoEntity")]
-    [JsonObject(MemberSerialization.OptIn)]
-    public class FormInfoEntity
+    [Table("FormInstanceEntity")]
+    public class FormInstanceEntity
     {
         #region 默认表属性
         /// <summary>
@@ -40,7 +39,6 @@ namespace FormDesigner
         /// </summary>
         [JsonProperty]
         public string FormDesc { get; set; }
-        public string Content { get; set; }
         public string ContentParse { get; set; }
     }
 }

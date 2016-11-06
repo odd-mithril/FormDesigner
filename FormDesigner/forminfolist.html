@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>表单实例列表</title>
+    <meta charset="utf-8" />
+    <title>WEB表单设计器 Ueditor Formdesign</title>
+    <link href="css/bootstrap/css/bootstrap.css?2023" rel="stylesheet" type="text/css" />
+    <link href="css/jquery.bootgrid.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" charset="utf-8" src="js/jquery-1.7.2.min.js?2023"></script>
+    <script type="text/javascript" charset="utf-8" src="js/bootstrap.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/jquery.bootgrid.js"></script>
+</head>
+<body>
+    <!--创建表单-->
+    <button type="button" class="btn btn-primary" id="newbtn" onclick="window.open('design.html')">创建表单模板</button>
+    <!--表单列表-->
+    <div>
+        <table id="grid" class="table table-condensed table-hover table-striped" data-selection="true" data-multi-select="true" data-row-select="true" data-keep-selection="true">
+            <thead>
+                <tr>
+                    <th data-column-id="Id" data-identifier="true" data-type="numeric" data-align="right" data-width="40">ID</th>
+                    <th data-column-id="FormName" data-order="asc" data-align="center" data-header-align="center" data-width="35%">表单名称</th>
+                    <th data-column-id="FormDesc" data-css-class="cell" data-header-css-class="column" data-filterable="true">表单描述</th>
+                    <th data-column-id="Modifier" data-visible="false">修改者</th>
+                    <th data-column-id="Modified" data-sortable="false" data-width="15%">修改时间</th>
+                    <th data-column-id="commands" data-formatter="commands" data-sortable="false" data-width="15%">操作</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <script type="text/javascript">
+        //获取json结构
+        $.ajax({
+            type: 'GET',
+            url: './FormService.ashx?atype=getforminfolist',
+            dataType: 'json',
+            success: function (data) {
+                if (data.length > 0) {
+                    var grid = $("#grid").bootgrid({
+                        formatters: {
+                            "commands": function (column, row) {
+                                return "<button type=\"button\" class=\"btn btn-xs btn-default command-browse\" data-row-id=\"" + row.Id + "\"><span class=\"fa fa-pencil\">查看实例</span></button> " +
+                                    "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.Id + "\"><span class=\"fa fa-pencil\">设计表单</span></button> " +
+                                    "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.Id + "\"><span class=\"fa fa-trash-o\">删除</span></button>";
+                            }
+                        }
+                    }).on("loaded.rs.jquery.bootgrid", function () {
+                        /* Executes after data is loaded and rendered */
+                        grid.find(".command-browse").on("click", function (e) {
+                            console.log($(this).data("row-id"));
+                            window.open('forminstancelist.html?rid=' + $(this).data("row-id"));
+                        }).end().find(".command-edit").on("click", function (e) {
+                            console.log($(this).data("row-id"));
+                            window.open('design.html?rid=' + $(this).data("row-id"));
+                        }).end().find(".command-delete").on("click", function (e) {
+                            console.log($(this).data("row-id"));
+                            //window.open('forminstancelist.html?rid=' + $(this).data("row-id"));
+                        });
+                    }).bootgrid("append", data);
+                }
+                else { $("#grid").bootgrid(); }
+            }
+        });
+    </script>
+</body>
+</html>
