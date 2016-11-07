@@ -9,10 +9,11 @@
     <script type="text/javascript" charset="utf-8" src="js/jquery-1.7.2.min.js?2023"></script>
     <script type="text/javascript" charset="utf-8" src="js/bootstrap.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/jquery.bootgrid.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/formdesigner.js"></script>
 </head>
 <body>
     <!--创建表单-->
-    <button type="button" class="btn btn-primary" id="newbtn" onclick="window.open('design.html')">创建表单模板</button>
+    <button type="button" class="btn btn-primary" id="newbtn" onclick="createapplication()">填写表单</button>
     <!--表单列表-->
     <div>
         <table id="grid" class="table table-condensed table-hover table-striped" data-selection="true" data-multi-select="true" data-row-select="true" data-keep-selection="true">
@@ -28,10 +29,11 @@
         </table>
     </div>
     <script type="text/javascript">
+        var rid = (getUrlParameter('rid')) ? getUrlParameter('rid') : 0;
         //获取json结构
         $.ajax({
             type: 'GET',
-            url: './FormService.ashx?atype=getforminfolist',
+            url: './FormService.ashx?atype=getforminstancelist&rid=' + rid,
             dataType: 'json',
             success: function (data) {
                 if (data.length > 0) {
@@ -48,6 +50,10 @@
                 else { $("#grid").bootgrid(); }
             }
         });
+
+        function createapplication() {
+            window.open('application.html?fid=' + rid);
+        }
     </script>
 </body>
 </html>

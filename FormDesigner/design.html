@@ -101,6 +101,7 @@
     <script type="text/javascript" charset="utf-8" src="js/ueditor/ueditor.all.js?2023"> </script>
     <script type="text/javascript" charset="utf-8" src="js/ueditor/lang/zh-cn/zh-cn.js?2023"></script>
     <script type="text/javascript" charset="utf-8" src="js/ueditor/formdesign/leipi.formdesign.v4.js?2023"></script>
+    <script type="text/javascript" charset="utf-8" src="js/formdesigner.js"></script>
     <!-- script start-->
     <script type="text/javascript">
         var formEditor = UE.getEditor('myFormDesign', {
@@ -121,6 +122,20 @@
             ///,iframeCssUrl:"css/bootstrap/css/bootstrap.css" //引入自身 css使编辑器兼容你网站css
             //更多其他参数，请参考ueditor.config.js中的配置项
         });
+
+        var rid = (getUrlParameter('rid')) ? getUrlParameter('rid') : 0;
+        if (rid) {
+            formEditor.ready(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: './FormService.ashx?atype=getforminfo&rid=' + rid,
+                    dataType: 'text',
+                    success: function (data) {
+                        formEditor.setContent(data);
+                    }
+                });
+            });
+        }
         var formDesign = {
             /*执行控件*/
             exec: function (method) {
@@ -291,9 +306,9 @@
                     //异步提交数据
                     $.ajax({
                         type: 'POST',
-                        url: './FormService.ashx?atype=saveform',
+                        url: './FormService.ashx?atype=saveforminfo',
                         //dataType : 'json',
-                        data: { 'type': type_value, 'formid': formid, 'parse_form': parse_form },
+                        data: { 'rid': rid, 'type': type_value, 'formid': formid, 'parse_form': parse_form },
                         success: function (data) {
                             //if (confirm('查看js解析后，提交到服务器的数据，请临时允许弹窗')) {
                             win_parse = window.open('', '_blank', 'width=800,height=600');
@@ -336,9 +351,9 @@
                     //异步提交数据
                     $.ajax({
                         type: 'POST',
-                        url: './FormService.ashx?atype=previewform',
+                        url: './FormService.ashx?atype=previewforminfo',
                         //dataType : 'json',
-                        data: { 'type': type_value, 'formid': formid, 'parse_form': parse_form },
+                        data: { 'rid': rid, 'type': type_value, 'formid': formid, 'parse_form': parse_form },
                         success: function (data) {
                             //if (confirm('查看js解析后，提交到服务器的数据，请临时允许弹窗')) {
                             win_parse = window.open('./temp_preview.html', '_blank');
@@ -370,29 +385,6 @@
                 }
             }
         };
-        var getUrlParameter = function getUrlParameter(sParam) {
-            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-                sURLVariables = sPageURL.split('&'),
-                sParameterName,
-                i;
-
-            for (i = 0; i < sURLVariables.length; i++) {
-                sParameterName = sURLVariables[i].split('=');
-
-                if (sParameterName[0] === sParam) {
-                    return sParameterName[1] === undefined ? true : sParameterName[1];
-                }
-            }
-        };
-        formEditor.ready(function () {
-            $.ajax({
-                type: 'GET',
-                url: './FormService.ashx?atype=getforminfo&rid='+getUrlParameter('rid'),
-                dataType: 'text',
-                success: function (data) {
-                    formEditor.setContent(data);}
-            });
-        });
     </script>
     <!-- script end -->
 </body>

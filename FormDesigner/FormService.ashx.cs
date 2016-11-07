@@ -27,17 +27,25 @@ namespace FormDesigner
                         context.Response.ContentType = "text/plain";
                         context.Response.Write(GetFormInfo(context));
                         break;
-                    case "saveform":
+                    case "saveforminfo":
                         context.Response.ContentType = "text/plain";
                         context.Response.Write(SaveForm(context));
                         break;
-                    case "previewform":
+                    case "previewforminfo":
                         context.Response.ContentType = "text/plain";
                         context.Response.Write(PreviewForm(context));
                         break;
                     case "getforminfolist":
                         context.Response.ContentType = "text/plain";
                         context.Response.Write(GetFormInfoList(context));
+                        break;
+                    case "getforminstance":
+                        context.Response.ContentType = "text/plain";
+                        context.Response.Write(GetFormInstance(context));
+                        break;
+                    case "getforminstancelist":
+                        context.Response.ContentType = "text/plain";
+                        context.Response.Write(GetFormInstanceList(context));
                         break;
                     default:
                         break;
@@ -65,7 +73,6 @@ namespace FormDesigner
 
             return result;
         }
-
         private string SaveForm(HttpContext context)
         {
             string result = string.Empty;
@@ -75,18 +82,41 @@ namespace FormDesigner
             {
                 using (FormDesignerContext dbcontext = new FormDesignerContext())
                 {
-                    form.ContentParse = context.Request.Form["parse_form"];
-                    form.Id = string.IsNullOrEmpty(context.Request.Form["formid"]) ? 0 : Int32.Parse(context.Request.Form["formid"]);
-                    form.Action = context.Request.Form["type"];
-                    form = JsonConvert.DeserializeObject<FormInfo>(form.ContentParse);
+                    string rid = context.Request.Form["rid"];
 
-                    FormInfoEntity formInfoEntity = new FormInfoEntity();
-                    formInfoEntity.Created = DateTime.Now;
-                    formInfoEntity.Modified = DateTime.Now;
-                    formInfoEntity.ContentParse = form.ContentParse;
-                    formInfoEntity.Content = context.Request.Form["formcontent"];
-                    dbcontext.FormInfoEntity.Add(formInfoEntity);
-                    dbcontext.SaveChanges();
+                    //rid为0时，新建表单
+                    if (rid == "0")
+                    {
+                        form.ContentParse = context.Request.Form["parse_form"];
+                        form.Id = string.IsNullOrEmpty(context.Request.Form["formid"]) ? 0 : Int32.Parse(context.Request.Form["formid"]);
+                        form.Action = context.Request.Form["type"];
+                        form = JsonConvert.DeserializeObject<FormInfo>(form.ContentParse);
+
+                        FormInfoEntity formInfoEntity = new FormInfoEntity();
+                        formInfoEntity.Created = DateTime.Now;
+                        formInfoEntity.Modified = DateTime.Now;
+                        formInfoEntity.ContentParse = form.ContentParse;
+                        formInfoEntity.Content = context.Request.Form["formcontent"];
+                        dbcontext.FormInfoEntity.Add(formInfoEntity);
+                        dbcontext.SaveChanges();
+                    }
+                    //当rid存在时，修改表单
+                    else
+                    {
+                        form.ContentParse = context.Request.Form["parse_form"];
+                        form.Id = string.IsNullOrEmpty(context.Request.Form["formid"]) ? 0 : Int32.Parse(context.Request.Form["formid"]);
+                        form.Action = context.Request.Form["type"];
+                        form = JsonConvert.DeserializeObject<FormInfo>(form.ContentParse);
+
+                        FormInfoEntity formInfoEntity = dbcontext.FormInfoEntity.Where(x => x.Id.ToString().Equals(rid)).FirstOrDefault();
+                        //formInfoEntity.Created = DateTime.Now;
+                        formInfoEntity.Modified = DateTime.Now;
+                        formInfoEntity.ContentParse = form.ContentParse;
+                        formInfoEntity.Content = context.Request.Form["formcontent"];
+                        dbcontext.Entry(formInfoEntity).State = System.Data.Entity.EntityState.Modified;
+                        dbcontext.SaveChanges();
+                    }
+
                 }
             }
             catch (Exception ex)
@@ -98,7 +128,6 @@ namespace FormDesigner
 
             return result;
         }
-
         private string GetFormInfoList(HttpContext context)
         {
             string result = string.Empty;
@@ -121,9 +150,10 @@ namespace FormDesigner
             string result = string.Empty;
             try
             {
+                string rid = context.Request["rid"];
                 using (FormDesignerContext dbcontext = new FormDesignerContext())
                 {
-                    result = JsonConvert.SerializeObject(dbcontext.FormInstanceEntity.ToList());
+                    result = JsonConvert.SerializeObject(dbcontext.FormInstanceEntity.Where(x => x.Id.ToString().Equals(rid)).ToList());
                 }
             }
             catch (Exception ex)
@@ -133,7 +163,6 @@ namespace FormDesigner
 
             return result;
         }
-
         private string GetFormInfo(HttpContext context)
         {
             string result = string.Empty;
@@ -146,6 +175,30 @@ namespace FormDesigner
                     if (forminfoentity != null)
                     {
                         result = forminfoentity.Content;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+            return result;
+        }
+        private string GetFormInstance(HttpContext context)
+        {
+            string result = string.Empty;
+            string fid = context.Request["fid"];
+            try
+            {
+                using (FormDesignerContext dbcontext = new FormDesignerContext())
+                {
+                    FormInfoEntity forminfoentity = dbcontext.FormInfoEntity.Where(x => x.Id.ToString().Equals(fid)).FirstOrDefault();
+                    if (forminfoentity != null)
+                    {
+                        FormInfo form = new FormInfo();
+                        form = JsonConvert.DeserializeObject<FormInfo>(forminfoentity.ContentParse);
+                        result = GetHtml(form);
                     }
                 }
             }
