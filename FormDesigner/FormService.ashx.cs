@@ -29,11 +29,11 @@ namespace FormDesigner
                         break;
                     case "saveforminfo":
                         context.Response.ContentType = "text/plain";
-                        context.Response.Write(SaveForm(context));
+                        context.Response.Write(SaveFormInfo(context));
                         break;
                     case "previewforminfo":
                         context.Response.ContentType = "text/plain";
-                        context.Response.Write(PreviewForm(context));
+                        context.Response.Write(PreviewFormInfo(context));
                         break;
                     case "getforminfolist":
                         context.Response.ContentType = "text/plain";
@@ -57,7 +57,7 @@ namespace FormDesigner
             }
         }
 
-        private string PreviewForm(HttpContext context)
+        private string PreviewFormInfo(HttpContext context)
         {
             string result = string.Empty;
 
@@ -73,7 +73,7 @@ namespace FormDesigner
 
             return result;
         }
-        private string SaveForm(HttpContext context)
+        private string SaveFormInfo(HttpContext context)
         {
             string result = string.Empty;
 
@@ -95,7 +95,7 @@ namespace FormDesigner
                         FormInfoEntity formInfoEntity = new FormInfoEntity();
                         formInfoEntity.Created = DateTime.Now;
                         formInfoEntity.Modified = DateTime.Now;
-                        formInfoEntity.ContentParse = form.ContentParse;
+                        formInfoEntity.ContentParse = context.Request.Form["parse_form"];
                         formInfoEntity.Content = context.Request.Form["formcontent"];
                         dbcontext.FormInfoEntity.Add(formInfoEntity);
                         dbcontext.SaveChanges();
@@ -196,8 +196,13 @@ namespace FormDesigner
                     FormInfoEntity forminfoentity = dbcontext.FormInfoEntity.Where(x => x.Id.ToString().Equals(fid)).FirstOrDefault();
                     if (forminfoentity != null)
                     {
+                        result = forminfoentity.Content;
+
                         FormInfo form = new FormInfo();
-                        form = JsonConvert.DeserializeObject<FormInfo>(forminfoentity.ContentParse);
+                        form.ContentParse = forminfoentity.ContentParse;
+                        form.Id = forminfoentity.Id;
+                        form = JsonConvert.DeserializeObject<FormInfo>(form.ContentParse);
+
                         result = GetHtml(form);
                     }
                 }

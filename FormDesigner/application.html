@@ -68,14 +68,15 @@
 <body>
     <div class="container">
         <div class="page-header">
-            <h1>预览表单 <small>如无问题请保存你的设计</small></h1>
+            <h1>填写表单</h1>
         </div>
         <div id="previewcontent"></div>
     </div><!--end container-->
     <script type="text/javascript">
+        var fid = (getUrlParameter('fid')) ? getUrlParameter('fid') : 0;
         $.ajax({
             type: 'GET',
-            url: './FormService.ashx?atype=getforminstance&rid=' + rid,
+            url: './FormService.ashx?atype=getforminstance&fid=' + fid,
             //dataType : 'json',
             success: function (data) {
                 if (data) {
