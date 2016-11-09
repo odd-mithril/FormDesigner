@@ -3,7 +3,7 @@
 <html>
 <head>
 
-    <title>临时预览 Ueditor FormDesign Plugins -leipi.org</title>
+    <title>表单填写 Ueditor FormDesign Plugins -leipi.org</title>
     <meta name="keyword" content="ueditor formdesign plugins,ueditor扩展,web表单设计器,高级表单设计器,Leipi Form Design,web form设计器,web form designer">
     <meta name="description" content="javascript jquery ueditor php表单设计器实例演示与下载！">
 
@@ -68,22 +68,37 @@
 <body>
     <div class="container">
         <div class="page-header">
-            <h1>填写表单</h1>
+            <h1>表单填写</h1>
+            <input id="forminstanceid" name="forminstanceid" class="hidden" />
+            <label class="label">表单名称</label>
+            <input id="forminstancename" type="text" />
+            <input id="saveforminstance" onclick="saveforminstance();" type="button" class="btn btn-default" value="提交" />
         </div>
-        <div id="previewcontent"></div>
+        <form id="formcontent">
+            <div id="previewcontent"></div>
+        </form>
     </div><!--end container-->
     <script type="text/javascript">
         var fid = (getUrlParameter('fid')) ? getUrlParameter('fid') : 0;
         $.ajax({
             type: 'GET',
             url: './FormService.ashx?atype=getforminstance&fid=' + fid,
-            //dataType : 'json',
+            dataType: 'json',
             success: function (data) {
                 if (data) {
-                    $("#previewcontent").html(data);
+                    $("#forminstanceid").val(data.id);
+                    $("#previewcontent").html(data.content.replace("\\\"", "\""));
                 }
             }
         });
+        function saveforminstance() {
+            $.ajax({
+                type: 'POST',
+                url: './FormService.ashx?atype=saveforminstance&fid=' + fid + '&fsid=' + $("#forminstanceid").val(),
+                dataType: 'json',
+                data: { 'content': $("#formcontent").serialize() }
+            });
+        }
     </script>
 </body>
 </html>

@@ -47,6 +47,10 @@ namespace FormDesigner
                         context.Response.ContentType = "text/plain";
                         context.Response.Write(GetFormInstanceList(context));
                         break;
+                    case "saveforminstance":
+                        context.Response.ContentType = "text/plain";
+                        context.Response.Write(SaveFormInstance(context));
+                        break;
                     default:
                         break;
                 }
@@ -203,8 +207,30 @@ namespace FormDesigner
                         form.Id = forminfoentity.Id;
                         form = JsonConvert.DeserializeObject<FormInfo>(form.ContentParse);
 
-                        result = GetHtml(form);
+                        result = "{\"id\": \"" + form.Id + "\", \"content\":\"" + GetHtml(form).Replace("\"", "\\\"") + "\"}";
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+            return result;
+        }
+        private string SaveFormInstance(HttpContext context)
+        {
+            string result = string.Empty;
+            string fid = context.Request["fid"];
+            string forminstancecontent = HttpUtility.UrlDecode(context.Request["content"]);
+            try
+            {
+                //考虑数据结构转换
+                string[] datas = forminstancecontent.Split('&');
+                Dictionary<string, string> dics = new Dictionary<string, string>();
+                foreach (string item in datas)
+                {
+                    dics.Add(item.Split('=')[0], item.Split('=')[1]);
                 }
             }
             catch (Exception ex)
@@ -314,7 +340,7 @@ namespace FormDesigner
         private static string GetRadios(JObject item, NameValueCollection formData)
         {
             JArray radiosOptions = item["options"] as JArray;
-            string temp = "<input type=\"radio\"  value=\"{1}\" name=\"{0}\" {2}>{3}&nbsp;";
+            string temp = "<input type=\"radio\" name=\"{0}\" value=\"{1}\" {2}>{3}&nbsp;";
             string temp_html = "";
             string name = item["name"].ToString();
             string value = formData[name];
@@ -331,7 +357,7 @@ namespace FormDesigner
                 }
                 else if (Ischecked == null && value != null && value == cvalue)
                     Ischecked = " checked=\"checked\" ";
-                temp_html += string.Format(temp, cvalue, name, Ischecked, cvalue);
+                temp_html += string.Format(temp, name, cvalue, Ischecked, cvalue);
             }
             return temp_html;
         }
