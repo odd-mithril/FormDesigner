@@ -42,6 +42,7 @@
                 .find("textarea").val("").end()
                 //插入表格
                .appendTo($("#" + sTbid));
+            refreshTable(dname);
         }
         //统计
         function sum_total(dname, e) {
@@ -62,6 +63,16 @@
                 obj = obj.parentNode;
             }
             oTable.deleteRow(obj.rowIndex);
+            refreshTable(dname);
+        }
+        function refreshTable(dname) {
+            var sTbid = dname + "_table";
+            $("#" + sTbid).find("tr").each(function (tri, trobj) {
+                $(trobj).find("td").each(function (tdi, tdobj) {
+                    console.log("tr:" + tri + ";td:" + tdi);
+                    $(tdobj).children(":first").attr("name", dname + "[" + tri + "][" + tdi + "]");
+                });
+            });
         }
     </script>
 </head>

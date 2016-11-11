@@ -100,7 +100,7 @@ namespace FormDesigner
                         formInfoEntity.Created = DateTime.Now;
                         formInfoEntity.Modified = DateTime.Now;
                         formInfoEntity.ContentParse = context.Request.Form["parse_form"];
-                        formInfoEntity.Content = context.Request.Form["formcontent"];
+                        formInfoEntity.Content = context.Request.Form["form_content"];
                         dbcontext.FormInfoEntity.Add(formInfoEntity);
                         dbcontext.SaveChanges();
                     }
@@ -115,8 +115,8 @@ namespace FormDesigner
                         FormInfoEntity formInfoEntity = dbcontext.FormInfoEntity.Where(x => x.Id.ToString().Equals(rid)).FirstOrDefault();
                         //formInfoEntity.Created = DateTime.Now;
                         formInfoEntity.Modified = DateTime.Now;
-                        formInfoEntity.ContentParse = form.ContentParse;
-                        formInfoEntity.Content = context.Request.Form["formcontent"];
+                        formInfoEntity.ContentParse = context.Request.Form["parse_form"];
+                        formInfoEntity.Content = context.Request.Form["form_content"];
                         dbcontext.Entry(formInfoEntity).State = System.Data.Entity.EntityState.Modified;
                         dbcontext.SaveChanges();
                     }

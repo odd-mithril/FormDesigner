@@ -308,7 +308,7 @@
                         type: 'POST',
                         url: './FormService.ashx?atype=saveforminfo',
                         //dataType : 'json',
-                        data: { 'rid': rid, 'type': type_value, 'formid': formid, 'parse_form': parse_form },
+                        data: { 'rid': rid, 'type': type_value, 'formid': formid, 'parse_form': parse_form, 'form_content': formeditor },
                         success: function (data) {
                             //if (confirm('查看js解析后，提交到服务器的数据，请临时允许弹窗')) {
                             win_parse = window.open('', '_blank', 'width=800,height=600');
@@ -353,7 +353,7 @@
                         type: 'POST',
                         url: './FormService.ashx?atype=previewforminfo',
                         //dataType : 'json',
-                        data: { 'rid': rid, 'type': type_value, 'formid': formid, 'parse_form': parse_form },
+                        data: { 'rid': rid, 'type': type_value, 'formid': formid, 'parse_form': parse_form, 'form_content': formeditor },
                         success: function (data) {
                             //if (confirm('查看js解析后，提交到服务器的数据，请临时允许弹窗')) {
                             win_parse = window.open('./temp_preview.html', '_blank');
