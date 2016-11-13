@@ -87,5 +87,10 @@ namespace FormDesigner
         public string Action { get; set; }
 
 
+        /// <summary>
+        /// 新增控件
+        /// </summary>
+        public List<FormField> FormFields { get; set; }
+
     }
 }

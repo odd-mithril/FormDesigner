@@ -40,5 +40,6 @@ namespace FormDesigner
         [JsonProperty]
         public string FormDesc { get; set; }
         public string ContentParse { get; set; }
+        public string Fields { get; set; }
     }
 }

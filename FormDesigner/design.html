@@ -150,7 +150,7 @@
                 //正则  radios|checkboxs|select 匹配的边界 |--|  因为当使用 {} 时js报错
                 var preg = /(\|-<span(((?!<span).)*leipiplugins=\"(radios|checkboxs|select)\".*?)>(.*?)<\/span>-\||<(img|input|textarea|select).*?(<\/select>|<\/textarea>|\/>))/gi, preg_attr = /(\w+)=\"(.?|.+?)\"/gi, preg_group = /<input.*?\/>/gi;
                 if (!fields) fields = 0;
-                var template_parse = template, template_data = new Array(), add_fields = new Object(), checkboxs = 0;
+                var template_parse = template, template_data = new Array(), add_fields = new Object(), afields = new Array(), checkboxs = 0;
                 var pno = 0;
                 template.replace(preg, function (plugin, p1, p2, p3, p4, p5, p6) {
                     var parse_attr = new Array(), attr_arr_all = new Object(), name = '', select_dot = '', is_new = false;
@@ -222,6 +222,7 @@
                                 arr['name'] = option['name'];
                                 arr['leipiplugins'] = attr_arr_all['leipiplugins'];
                                 add_fields[option['name']] = arr;
+                                afields.push(arr);
                             }
                         });
                         attr_arr_all['content'] += '</span>';
@@ -271,6 +272,7 @@
                             arr['name'] = name;
                             arr['leipiplugins'] = attr_arr_all['leipiplugins'];
                             add_fields[arr['name']] = arr;
+                            afields.push(arr);
                         }
                         template_data[pno] = attr_arr_all;
                     }
@@ -281,9 +283,10 @@
                     'template': template,//完整html
                     'parse': template_parse,//控件替换为{data_1}的html
                     'data': template_data,//控件属性
-                    'add_fields': add_fields//新增控件
+                    'add_fields': add_fields,//新增控件
+                    'afields': afields//控件列表
                 });
-                return JSON.stringify(parse_form);
+                return parse_form;//JSON.stringify(parse_form);
             },
             /*type  =  save 保存设计 versions 保存版本  close关闭 */
             fnCheckForm: function (type) {
@@ -308,7 +311,7 @@
                         type: 'POST',
                         url: './FormService.ashx?atype=saveforminfo',
                         //dataType : 'json',
-                        data: { 'rid': rid, 'type': type_value, 'formid': formid, 'parse_form': parse_form, 'form_content': formeditor },
+                        data: { 'rid': rid, 'type': type_value, 'formid': formid, 'parse_form': JSON.stringify(parse_form), 'form_content': formeditor, 'fields': JSON.stringify(parse_form.afields) },
                         success: function (data) {
                             //if (confirm('查看js解析后，提交到服务器的数据，请临时允许弹窗')) {
                             win_parse = window.open('', '_blank', 'width=800,height=600');
@@ -353,7 +356,7 @@
                         type: 'POST',
                         url: './FormService.ashx?atype=previewforminfo',
                         //dataType : 'json',
-                        data: { 'rid': rid, 'type': type_value, 'formid': formid, 'parse_form': parse_form, 'form_content': formeditor },
+                        data: { 'rid': rid, 'type': type_value, 'formid': formid, 'parse_form': JSON.stringify(parse_form), 'form_content': formeditor },
                         success: function (data) {
                             //if (confirm('查看js解析后，提交到服务器的数据，请临时允许弹窗')) {
                             win_parse = window.open('./temp_preview.html', '_blank');

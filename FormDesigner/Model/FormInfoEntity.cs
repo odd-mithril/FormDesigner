@@ -42,5 +42,6 @@ namespace FormDesigner
         public string FormDesc { get; set; }
         public string Content { get; set; }
         public string ContentParse { get; set; }
+        public string Fields { get; set; }
     }
 }

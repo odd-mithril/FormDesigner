@@ -95,12 +95,14 @@ namespace FormDesigner
                         form.Id = string.IsNullOrEmpty(context.Request.Form["formid"]) ? 0 : Int32.Parse(context.Request.Form["formid"]);
                         form.Action = context.Request.Form["type"];
                         form = JsonConvert.DeserializeObject<FormInfo>(form.ContentParse);
+                        List<FormField> formfields = JsonConvert.DeserializeObject<List<FormField>>(context.Request.Form["fields"]);
 
                         FormInfoEntity formInfoEntity = new FormInfoEntity();
                         formInfoEntity.Created = DateTime.Now;
                         formInfoEntity.Modified = DateTime.Now;
                         formInfoEntity.ContentParse = context.Request.Form["parse_form"];
                         formInfoEntity.Content = context.Request.Form["form_content"];
+                        formInfoEntity.Fields = context.Request.Form["fields"];
                         dbcontext.FormInfoEntity.Add(formInfoEntity);
                         dbcontext.SaveChanges();
                     }
@@ -111,12 +113,14 @@ namespace FormDesigner
                         form.Id = string.IsNullOrEmpty(context.Request.Form["formid"]) ? 0 : Int32.Parse(context.Request.Form["formid"]);
                         form.Action = context.Request.Form["type"];
                         form = JsonConvert.DeserializeObject<FormInfo>(form.ContentParse);
+                        List<FormField> formfields = JsonConvert.DeserializeObject<List<FormField>>(context.Request.Form["fields"]);
 
                         FormInfoEntity formInfoEntity = dbcontext.FormInfoEntity.Where(x => x.Id.ToString().Equals(rid)).FirstOrDefault();
                         //formInfoEntity.Created = DateTime.Now;
                         formInfoEntity.Modified = DateTime.Now;
                         formInfoEntity.ContentParse = context.Request.Form["parse_form"];
                         formInfoEntity.Content = context.Request.Form["form_content"];
+                        formInfoEntity.Fields = context.Request.Form["fields"];
                         dbcontext.Entry(formInfoEntity).State = System.Data.Entity.EntityState.Modified;
                         dbcontext.SaveChanges();
                     }
@@ -225,12 +229,20 @@ namespace FormDesigner
             string forminstancecontent = HttpUtility.UrlDecode(context.Request["content"]);
             try
             {
-                //考虑数据结构转换
-                string[] datas = forminstancecontent.Split('&');
-                Dictionary<string, string> dics = new Dictionary<string, string>();
-                foreach (string item in datas)
+                using (FormDesignerContext dbcontext = new FormDesignerContext())
                 {
-                    dics.Add(item.Split('=')[0], item.Split('=')[1]);
+                    FormInfoEntity forminfoentity = dbcontext.FormInfoEntity.Where(x => x.Id.ToString().Equals(fid)).FirstOrDefault();
+                    if (forminfoentity != null)
+                    {
+                        List<FormField> formfields = JsonConvert.DeserializeObject<List<FormField>>(forminfoentity.Fields);
+                        //考虑数据结构转换
+                        string[] datas = forminstancecontent.Split('&');
+                        Dictionary<string, string> dics = new Dictionary<string, string>();
+                        foreach (string item in datas)
+                        {
+                            dics.Add(item.Split('=')[0], item.Split('=')[1]);
+                        }
+                    }
                 }
             }
             catch (Exception ex)

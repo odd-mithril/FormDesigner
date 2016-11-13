@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.css" rel="stylesheet" />
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="./css/marketingplanPopHtml.css">
+</head>
+
+<body>
+    <div class="title_TimeBOX">
+        <div class="popTaskName">
+            <dl>
+                <dt>节点名：</dt>
+                <dd>
+                    <input type="text" class="form-control input-sm" id="taskIconText" maxlength="30">
+                </dd>
+            </dl>
+            <span class="right">节点ID : 123123</span>
+        </div>
+        <h5>设置排重优先级</h5>
+        <table cellpadding="0" cellspacing="0" class="tableBox">
+            <thead>
+                <tr>
+                    <th>优先级</th>
+                    <th>输入节点类型</th>
+                    <th>输入节点名称</th>
+                    <th>输出显示名称</th>
+                    <th>优先级调整</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>合并</td>
+                    <td>合并</td>
+                    <td>
+                        <input type="text" class="form-control input-sm" value="合并">
+                    </td>
+                    <td>
+                        <a class="icon" href="javascript:void(0)">&#xe631;</a>
+                        <a class="icon" href="javascript:void(0)">&#xe630;</a>
+                        <a class="icon down" href="javascript:void(0)">&#xe631;</a>
+                        <a class="icon down" href="javascript:void(0)">&#xe630;</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>会员查询</td>
+                    <td>近1年潜在客户</td>
+                    <td>
+                        <input type="text" class="form-control input-sm" value="近1年潜在客户">
+                    </td>
+                    <td>
+                        <a class="icon" href="javascript:void(0)">&#xe631;</a>
+                        <a class="icon" href="javascript:void(0)">&#xe630;</a>
+                        <a class="icon down" href="javascript:void(0)">&#xe631;</a>
+                        <a class="icon down" href="javascript:void(0)">&#xe630;</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="modal-footer modal-footer-add">
+            <button type="button" class="btn btn-default" id="popClose">关闭</button>
+            <button type="button" class="btn btn-primary" id="popSace">确认</button>
+        </div>
+    </div>
+    <script type="text/javascript">
+    $(function($) {
+        $("#popClose").click(function() {
+            window.parent.closeModalPop();
+        })
+        $("#popSace").click(function() {
+                window.parent.closeModalPop();
+                window.parent.modifyTaskIconText("jsPlumb_0", $("#taskIconText").val());
+            })
+            //如果有其它JS，此语句放在最后执行
+            //$('#popIframeBox',window.parent.document).css({height:$("#title_TimeBOX").css("height")});
+        setTimeout(function() {
+            $('#popIframeBox', window.parent.document).css({
+                height: $(document.body).height()
+            });
+        }, 100);
+    });
+    </script>
+</body>
+
+</html>
