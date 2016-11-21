@@ -31,7 +31,8 @@ var marketingPlanIconJson = [
 				"type" : "MemberSearch",
 				"show" : true,
 				"sourceList" : [
-					"Start","Time"
+					"Start","Time",
+                    "Start", "MemberSearch"
 				],
 				"popUrl" : "pop_time.html"
 			},
