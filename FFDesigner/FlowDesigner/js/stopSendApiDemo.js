@@ -1,4 +1,0 @@
-{
-	"result" : true,
-	"error" : null
-}
