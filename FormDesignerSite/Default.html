@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=11">
+    <title>iview example</title>
+    <link rel="stylesheet" type="text/css" href="./dist/styles/iview.css">
+    <script type="text/javascript" src="./dist/vue.js"></script>
+    <script type="text/javascript" src="./dist/vue-resource.js"></script>
+    <script type="text/javascript" src="./dist/iview.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <i-button type="primary" size="large" @click="newlist">新增</i-button>
+        <i-Table v-bind:columns="columns1" v-bind:data="data1"></i-Table>
+        <Modal v-model="modal1" title="列表定义" @on-ok="ok" @on-cancel="cancel">
+            <Row>
+                <i-Col span="3"><span>列表名称</span></i-Col>
+                <i-Col span="9">
+                    <i-Input v-model="formItem.name" placeholder=""></i-Input>
+                </i-Col>
+                <i-Col span="6">列表描述</i-Col>
+                <i-Col span="6">
+                    <i-Input v-model="formItem.age" placeholder=""></i-Input>
+                </i-Col>
+            </Row>
+        </Modal>
+    </div>
+    <script>
+        var curInstance = new Vue({
+            el: '#app',
+            data: {
+                modal1: false,
+                columns1: [
+                    {
+                        title: '名称',
+                        key: 'Name',
+                        sortable: true,
+                        render: function (h, params) {
+                            return h('div', [
+                                h('Icon', {
+                                    props: {
+                                        type: 'person'
+                                    }
+                                }),
+                                h('strong', params.row.Name)
+                            ]);
+                        }
+                    },
+                    {
+                        title: '描述',
+                        key: 'Description'
+                    },
+                    {
+                        title: '操作',
+                        key: 'action',
+                        width: 150,
+                        align: 'center',
+                        render: function renderM(h, params) {
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: function () {
+                                            console.log(params.index);
+                                            curInstance.show(params.index);
+                                        }
+                                    }
+                                }, '查看'),
+                                h('Button', {
+                                    props: {
+                                        type: 'error',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: function () {
+                                            console.log(params.index);
+                                            curInstance.remove(params.index);
+                                        }
+                                    }
+                                }, '删除')
+                            ]);
+                        }
+                    }
+                ],
+                data1: [
+                    {
+                        Name: 'test1',
+                        Description: '北京市朝阳区芍药居'
+                    }
+                ],
+                formItem: {
+                    Name: '',
+                    Description: ''
+                },
+                apiUrl: 'http://localhost:8001/api/lists',
+            },
+            created: function () {
+                //this.getCustomers()
+            },
+            methods: {
+                newlist() {
+                    this.modal1 = true;
+                },
+                ok() {
+                    createCustomer();
+                    this.$Message.info('点击了确定');
+                },
+                cancel() {
+                    this.$Message.info('点击了取消');
+                },
+
+                closeDialog: function () {
+                    this.show = false
+                },
+                getCustomers: function () {
+                    var vm = this
+                    vm.$http.get(vm.apiUrl)
+                        .then((response) => {
+                            vm.$set('data1', response.data);
+                        })
+                },
+                createCustomer: function () {
+                    var vm = this
+                    vm.$http.post(vm.apiUrl, vm.formItem)
+                        .then((response) => {
+                            vm.$set('formItem', {});
+                            vm.getCustomers();
+                        })
+                    this.show = false
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
