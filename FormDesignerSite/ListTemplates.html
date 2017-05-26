@@ -9,21 +9,22 @@
     <script type="text/javascript" src="./dist/vue.js"></script>
     <script type="text/javascript" src="./dist/vue-resource.js"></script>
     <script type="text/javascript" src="./dist/iview.js"></script>
+    <script type="text/javascript" src="./dist/sy-common.js"></script>
 </head>
 
 <body>
     <div id="app">
-        <i-button type="primary" size="large" @click="newlist">新增</i-button>
+        <i-button type="primary" size="large" @click="newlist">新增列表定义</i-button>
         <i-Table v-bind:columns="columns1" v-bind:data="data1"></i-Table>
         <Modal v-model="modal1" title="列表定义" @on-ok="ok" @on-cancel="cancel">
             <Row>
                 <i-Col span="3"><span>列表名称</span></i-Col>
                 <i-Col span="9">
-                    <i-Input v-model="formItem.name" placeholder=""></i-Input>
+                    <i-Input v-model="formItem.Name" placeholder=""></i-Input>
                 </i-Col>
                 <i-Col span="6">列表描述</i-Col>
                 <i-Col span="6">
-                    <i-Input v-model="formItem.age" placeholder=""></i-Input>
+                    <i-Input v-model="formItem.Description" placeholder=""></i-Input>
                 </i-Col>
             </Row>
             <i-Table v-bind:columns="columns2" v-bind:data="data2"></i-Table>
@@ -71,11 +72,24 @@
                                     },
                                     on: {
                                         click: function () {
-                                            console.log(params.index);
-                                            curInstance.show(params.index);
+                                            curInstance.showListDefinition(params.index);
                                         }
                                     }
                                 }, '查看'),
+                                h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: function () {
+                                            curInstance.editListDefinition(params.index);
+                                        }
+                                    }
+                                }, '编辑'),
                                 h('Button', {
                                     props: {
                                         type: 'error',
@@ -84,7 +98,6 @@
                                     on: {
                                         click: function () {
                                             console.log(params.index);
-                                            curInstance.remove(params.index);
                                         }
                                     }
                                 }, '删除')
@@ -131,7 +144,6 @@
                 cancel() {
                     this.$Message.info('点击了取消');
                 },
-
                 closeDialog: function () {
                     this.show = false
                 },
@@ -152,6 +164,17 @@
                             vm.$Message.info('点击了确定');
                         })
                     this.show = false
+                },
+                showListDefinition: function (index) {
+                    var vm = this;
+                    vm.modal1 = true;
+                    console.log(vm.data1[index]);
+                    vm.formItem = vm.data1[index];
+                },
+                editListDefinition: function (index) {
+                    var vm = this;
+                    console.log(index);
+                    window.open('ListDefinition.html?listid=' + vm.data1[index].Id);
                 }
             }
         })
